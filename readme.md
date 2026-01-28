@@ -21,9 +21,16 @@ while loop [Done]
  
 🔹 Flutter Basics
 Understand:
-What is Flutter
-What is a Widget
-StatelessWidget vs StatefulWidget
-Basic project structure
+What is Flutter [Done]
+What is a Widget [Done]
+StatelessWidget vs StatefulWidget [Done]
+Basic project structure [Done]
+
+🔹 Practice Task
+Create a simple Flutter app that:
+Displays your name [Done]
+Displays a welcome message [Done]
+Uses at least 2 Text widgets [Done]
+Uses Column or Center widget [Done]
 
 
