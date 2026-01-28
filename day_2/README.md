@@ -1,16 +1,33 @@
 # day_2
 
-A new Flutter project.
+What is Flutter
+Flutter is an open-source UI software development kit created by Google. It is used to build cross-platform (Android & IOS) applications from a single codebase.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+What is a Widget
+A widget is the basic building block of Flutter user interfaces. Everything is a widget-from a button and text to the layout and the app itself.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+StatelessWidget vs StatefulWidget
+StatelessWidget is a widget that does not change its state over time. It is used for static UI elements that do not require any dynamic behavior. 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+StatefulWidget is a widget that can change its state over time. It is used for dynamic UI elements that require some interaction or dynamic behavior. 
+
+
+Basic project structure
+Project Structure in flutter is like this:
+
+lib
+├── main.dart
+├── models
+│   └── user.dart
+├── screens
+│   ├── home_screen.dart
+│   └── settings_screen.dart
+├── widgets
+│   ├── custom_button.dart
+│   └── custom_text_field.dart
+└── utils
+    └── constants.dart
+
+
