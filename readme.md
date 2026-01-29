@@ -33,4 +33,6 @@ Displays a welcome message [Done]
 Uses at least 2 Text widgets [Done]
 Uses Column or Center widget [Done]
 
+Day 3
 
+The Widgets i have used for the Practice tasks are MaterialApp, Scaffold, AppBar, Center, Column, Image, Text, ElevatedButton

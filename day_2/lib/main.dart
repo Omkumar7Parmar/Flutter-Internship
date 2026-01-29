@@ -1,3 +1,5 @@
+// import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,27 +14,30 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Welcome To My App",
-
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Welcome to the App"),
+          title: Text("Hello User"),
           centerTitle: true,
-          backgroundColor: Colors.lightBlue,
+          backgroundColor: Colors.blue,
         ),
-        body: Center(child: Text(
-          "Omkumar",
-          textDirection: TextDirection.ltr,
-          style: TextStyle(
-            color: Colors.white,
-            backgroundColor: Colors.grey,
-            fontSize: 40,
-          ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image(image: AssetImage('assets/images/profile.png')),
+              Text("Omkumar Parmar"),
+              Text("I am a Developer"),
+              ElevatedButton(
+                onPressed: () {
+                  print("Button was pressed");
+                },
+                child: Text("Press this"),
+              ),
+            ],
           ),
         ),
-
-
       ),
-
     );
   }
 }
