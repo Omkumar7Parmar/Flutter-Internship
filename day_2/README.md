@@ -34,3 +34,5 @@ Day 3
 
 The Widgets i have used for the Practice tasks are MaterialApp, Scaffold, AppBar, Center, Column, Image, Text, ElevatedButton
 
+Day 4
+I used SingleChildScrollView for scrollable body.
