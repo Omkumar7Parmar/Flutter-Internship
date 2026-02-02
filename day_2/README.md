@@ -36,3 +36,13 @@ The Widgets i have used for the Practice tasks are MaterialApp, Scaffold, AppBar
 
 Day 4
 I used SingleChildScrollView for scrollable body.
+
+Day 5
+Screen flow explanation
+
+On HomeScreen there is a Elevated button it uses Navigation.push and adds new screen to the navigation stack which is SecondScreen. 
+after clicking the button second screen appears with back button which uses context and after clicking the back button it navigates to the previous screen which was HomeScreen. 
+back button only appears when there is a screen underneath it in the stack thanks to AppBar, because when it doesn't have anything underneath in the stack back button doesn't appears
+
+What navigation method you used
+I used Navigation.push 
