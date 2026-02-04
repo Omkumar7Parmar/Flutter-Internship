@@ -49,3 +49,8 @@ back button only appears when there is a screen underneath it in the stack thank
 
 What navigation method you used
 I used Navigation.push 
+
+Day 6
+I created 2 form fields, first Email and second for the Password
+I used email validation which checks whether email is valid or not.
+and also whether password fits in the strong password criteria. 
