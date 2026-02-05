@@ -54,3 +54,10 @@ Day 6
 I created 2 form fields, first Email and second for the Password
 I used email validation which checks whether email is valid or not.
 and also whether password fits in the strong password criteria. 
+
+Day 7
+What I learned during Week 1 - I learnt about the basics of Flutter and Dart and how to create a simple Flutter app.
+
+Which part was difficult - I think each topic was easy to understand and implement but certain things are differnt from react native but easy to adapt.
+
+ScreenShots are attached in root directory
