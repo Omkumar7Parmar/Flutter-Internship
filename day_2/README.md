@@ -51,3 +51,9 @@ Day 6
 I created 2 form fields, first Email and second for the Password
 I used email validation which checks whether email is valid or not.
 and also whether password fits in the strong password criteria. 
+
+Day 7
+Which advanced layout widgets you used - Stack
+What layout issue you faced and how you fixed it:
+I wasn't able to move the text in the center of the image
+Then i found out about the alignment property of stack which moves the child widget as per the alignment, like i used center.  
