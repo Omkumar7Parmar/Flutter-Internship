@@ -19,6 +19,8 @@ class MyApp extends StatelessWidget {
             CircleAvatarWidget(),
             UserName(),
             EmailID(),
+            Stats(),
+            // WorkTime(),
             StackUsingDuck(),
           ],
         )
@@ -76,6 +78,33 @@ class EmailID extends StatelessWidget {
           children: [
             Padding(padding: EdgeInsets.only(top: 30.0)),
             Text("opomkumar904@gmail.com", style: TextStyle(fontSize: 20,),),
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class Stats extends StatelessWidget {
+  const Stats({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        // Padding(padding: EdgeInsetsGeometry.only()),
+        Column(
+          children: [
+            Text("Screen Time", style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w300),),
+            Text("6 Hours",style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w300))
+          ],
+        ),
+        // Padding(padding: EdgeInsets.only()),
+        Column(
+          children: [
+            Text("Work Time", style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w300),),
+            Text("8 Hours", style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w200))
           ],
         )
       ],
