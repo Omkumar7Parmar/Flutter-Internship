@@ -53,7 +53,16 @@ I used email validation which checks whether email is valid or not.
 and also whether password fits in the strong password criteria. 
 
 Day 7
+Week 1 revision + Mini Project 
+
+Day 8
 Which advanced layout widgets you used - Stack
 What layout issue you faced and how you fixed it:
 I wasn't able to move the text in the center of the image
-Then i found out about the alignment property of stack which moves the child widget as per the alignment, like i used center.  
+Then i found out about the alignment property of stack which moves the child widget as per the alignment, like i used center. 
+
+Day 9
+What dynamic data you used - List<Map> for Product List and used it in both ListView and GridView
+Difference you observed between ListView and GridView :
+ListView Displays item vertically by default and GridView helps to display the items in grid view (row x column)
+

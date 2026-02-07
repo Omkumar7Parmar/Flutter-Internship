@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screen2.dart'; // Ensure this matches your filename
-
+import '/data/product_list.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -16,12 +16,16 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(title: Text("This is AppBar"),backgroundColor: Colors.red, centerTitle: true,),
         body: Column(
           children: [
-            CircleAvatarWidget(),
-            UserName(),
-            EmailID(),
-            Stats(),
-            // WorkTime(),
-            StackUsingDuck(),
+            // CircleAvatarWidget(),
+            // UserName(),
+            // EmailID(),
+            // Stats(),
+            // // WorkTime(),
+            // StackUsingDuck(),
+            ProductList(),
+            // Padding(padding: EdgeInsets.only(top: 25)),
+            Divider(thickness: 2, color: Colors.black,),
+            GridViewBuilder(),
           ],
         )
       ),
@@ -97,7 +101,7 @@ class Stats extends StatelessWidget {
         Column(
           children: [
             Text("Screen Time", style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w300),),
-            Text("6 Hours",style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w300))
+            Text("7 Hours",style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.w300))
           ],
         ),
         // Padding(padding: EdgeInsets.only()),
@@ -133,3 +137,40 @@ class StackUsingDuck extends StatelessWidget {
     );
   }
 }
+
+class ProductList extends StatelessWidget {
+  const ProductList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ListView.builder(
+          itemCount: 20,
+          physics: BouncingScrollPhysics(),
+          itemBuilder: (context, index){
+            return ListTile(title: Text(productList[index].values.first),);
+          }
+      ),
+    );
+  }
+}
+
+class GridViewBuilder extends StatelessWidget {
+  const GridViewBuilder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+        child: GridView.builder(itemCount:30,gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 4, mainAxisSpacing: 4), itemBuilder: (context, index){
+          return Column(
+            children: [
+              Icon(Icons.shopping_bag, size: 35,),
+              Text(productList[index].values.first),
+              Text("Description")
+            ],
+          );
+        })
+    );
+  }
+}
+
