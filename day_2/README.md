@@ -66,3 +66,7 @@ What dynamic data you used - List<Map> for Product List and used it in both List
 Difference you observed between ListView and GridView :
 ListView Displays item vertically by default and GridView helps to display the items in grid view (row x column)
 
+Day 10
+What data you passed between screens => Name, image, Description
+Which widget you made reusable => ListView, Container
+ 

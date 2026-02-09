@@ -1,34 +1,19 @@
-final List<Map<int, String>> productList = [
-  {1: "Product a"},
-  {2: "Product b"},
-  {3: "Product c"},
-  {4: "Product d"},
-  {5: "Product 5"},
-  {6: "Product 6"},
-  {7: "Product 7"},
-  {8: "Product 8"},
-  {9: "Product 9"},
-  {10: "Product e"},
-  {11: "Product f"},
-  {12: "Product g"},
-  {13: "Product h"},
-  {14: "Product i"},
-  {15: "Product 15"},
-  {16: "Product 16"},
-  {17: "Product 17"},
-  {18: "Product 18"},
-  {19: "Product a"},
-  {20: "Product wf"},
-  {21: "Product s"},
-  {22: "Product b"},
-  {23: "Product 1qw"},
-  {24: "Product 24"},
-  {25: "Product 25"},
-  {26: "Product 26"},
-  {27: "Product 27"},
-  {28: "Product 28"},
-  {29: "Product wf"},
-  {30: "Product 30"},
 
+final List<Map<String, dynamic>> productList = [
+  {
+    "name":"Dog",
+    "imagePath":"assets/images/dog.jpg",
+    "description": "This is a Dog"
+  },
+  {
+    "name":"Cat",
+    "imagePath":"assets/images/cat.jpg",
+    "description": "This is a Cat"
+  },
+  {
+    "name":"Duck",
+    "imagePath":"assets/images/duck.jpg",
+    "description": "This is a Duck"
+  },
 ];
 
