@@ -70,3 +70,8 @@ Day 10
 What data you passed between screens => Name, image, Description
 Which widget you made reusable => ListView, Container
  
+Day 11
+What data you stored - String type data => Name
+Where and why you used SharedPreferences - While fetching, saving, and clearing data
+Data like name, login state or theme status SharedPreference is used. 
+ 
