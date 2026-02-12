@@ -1,40 +1,39 @@
-import 'package:flutter/material.dart';
 import 'package:day_2/data/product_list.dart';
-import 'main.dart';
-import 'package:day_2/widgets/products_showcase.dart';
+import 'package:flutter/material.dart';
 
-
-class ShowCase extends StatelessWidget {
-  final String name;
-  final String imagePath;
-  final String description;
-  // ShowCase({required this.name, required this.data});
-
-  const ShowCase({super.key,
-    required this.name,
-    required this.imagePath,
-    required this.description
-  });
+class ThirdScreen extends StatelessWidget {
+  const ThirdScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+
+
     return Scaffold(
-      appBar: AppBar(title: Text("Product ShowCase"),backgroundColor: Colors.yellow,),
+      appBar: AppBar(
+        title: Text("Third Screen"),
+        backgroundColor: Colors.green,
+        centerTitle: true,
+      ),
       body: Center(
         child: Container(
-          height: 350,
-          width: 350,
-          decoration: BoxDecoration(border: Border.all(color: Colors.black,width: 4)),
-
+          height: 200,
+          width: 200,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.black
+            )
+          ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Center(child: Text(name, style: TextStyle(fontSize: 20),),),
-              Center(child: Image.asset(imagePath, height: 280, width: 280,)),
-              Center(child: Text(description, style: TextStyle(fontSize: 20),),),
+              Text(args.name, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 25),),
+              Text(args.description, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 25),),
             ],
           ),
         ),
-      ),
+      )
     );
   }
 }

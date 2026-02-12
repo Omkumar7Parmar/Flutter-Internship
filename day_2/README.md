@@ -75,3 +75,14 @@ What data you stored - String type data => Name
 Where and why you used SharedPreferences - While fetching, saving, and clearing data
 Data like name, login state or theme status SharedPreference is used. 
  
+Day 12
+Which concept was most challenging - LocalStorage 
+Screenshot are attached in the root directory
+
+Day 13
+App navigation flow explanation - App Loads with HomeScreen, after clicking on "Second Screen" it navigates to 'SecondScreen'. Then after clicking on any option it navigates to 'ThirdScreen' to display the name and description.
+
+Routes you created -
+'HomeScreen'
+'SecondScreen'
+'ThirdScreen'
