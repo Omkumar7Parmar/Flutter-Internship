@@ -6,7 +6,9 @@ class ThirdScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+    // final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+    final args1 = ModalRoute.of(context)!.settings.arguments as FormArguments;
+
 
 
     return Scaffold(
@@ -28,8 +30,10 @@ class ThirdScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(args.name, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 25),),
-              Text(args.description, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 25),),
+              Text(args1.firstName, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),),
+              Text(args1.lastName, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),),
+              Text(args1.email, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),),
+
             ],
           ),
         ),

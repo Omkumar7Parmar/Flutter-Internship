@@ -1,39 +1,109 @@
 import 'package:day_2/data/product_list.dart';
 import 'package:flutter/material.dart';
 import 'package:day_2/screens/screen3.dart';
-class ScreenScreen extends StatelessWidget {
-  
-  const ScreenScreen ({super.key});
+
+
+class SecondScreen extends StatefulWidget {
+  const SecondScreen({super.key});
+
+  @override
+  State<SecondScreen> createState() => _SecondScreenState();
+}
+
+
+
+
+class _SecondScreenState extends State<SecondScreen> {
+
+  final _formKey = GlobalKey<FormState>();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+
+  @override
+  void dispose(){
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Second Screen"),
-        backgroundColor: Colors.amber,
+        backgroundColor: Colors.green,
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton(onPressed: (){
-              Navigator.pushNamed(context, 'thirdScreen', arguments: ScreenArguments(name: productList[0]["name"], description: productList[1]["description"]));
-            }, child: Text("Dog", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),)),
+      body: Container(
+        margin: EdgeInsets.only(right: 20, left: 20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: _firstNameController,
+                decoration: InputDecoration(labelText: "Enter First Name", border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                ),
+                validator: (value){
+                  if(value == null || value.isEmpty){
+                    return "Please Enter Name";
+                  }
+                  else if(value.length <= 3){
+                    return "More Than 3 Characters";
+                  }
+                  else {
+                    return null;
+                  }
+                },
+              ),
+              SizedBox(height: 20,),
 
-            TextButton(onPressed: (){
-              Navigator.pushNamed(context, 'thirdScreen', arguments: ScreenArguments(name: productList[1]["name"], description: productList[1]["description"]));
+              TextFormField(
+                controller: _lastNameController,
+                decoration: InputDecoration(labelText: "Enter Last Name", border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                ),
+                validator: (value){
+                  if(value == null || value.isEmpty){
+                    return "Please Enter Name";
+                  }
+                  else if(value.length <= 3){
+                    return "More Than 3 Characters";
+                  }
+                  else {
+                    return null;
+                  }
+                },
+              ),
+              SizedBox(height: 20,),
 
-            }, child: Text("Cat", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),)),
-            TextButton(onPressed: (){
-              Navigator.pushNamed(context, 'thirdScreen', arguments: ScreenArguments(name: productList[2]["name"], description: productList[1]["description"]));
-
-            }, child: Text("Duck", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),)),
-          ],
-        ),
-
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(labelText: "Enter Email", border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                ),
+                validator: (value){
+                  if(value == null || value.isEmpty){
+                    return "Please Write Something";
+                  }
+                  else if(!value.contains("@")){
+                    return "Invalid Email";
+                  }
+                  else {
+                    return null;
+                  }
+                },
+              ),
+              SizedBox(height: 20,),
+              ElevatedButton(onPressed: (){
+                if(_formKey.currentState!.validate()){
+                  Navigator.pushNamed(context, 'thirdScreen', arguments: FormArguments(firstName: _firstNameController.text, lastName: _lastNameController.text, email: _emailController.text));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Form Submitted"), backgroundColor: Colors.brown,));
+                }
+              }, child: Text("Submit")),
+            ],
+        )),
       ),
-
     );
   }
 }

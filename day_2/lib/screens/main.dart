@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       initialRoute: 'homeScreen',
       routes: {
         'homeScreen': (context) => HomeScreen(),
-        'secondScreen': (context) => ScreenScreen(),
+        'secondScreen': (context) => SecondScreen(),
         'thirdScreen': (context) => ThirdScreen(),
       },
       home: HomeScreen(),

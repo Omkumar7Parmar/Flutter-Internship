@@ -86,3 +86,11 @@ Routes you created -
 'HomeScreen'
 'SecondScreen'
 'ThirdScreen'
+
+Day 14
+What validations you applied - 
+for FirstName and LastName = String must not be empty and at least have 4 characters.
+for Email = String must not be empty and must consist "@"
+
+How you handled user feedback
+If input is not valid than form returns "Invalid Input" respectively to the Field type 
