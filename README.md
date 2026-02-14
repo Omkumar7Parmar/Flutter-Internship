@@ -1,4 +1,4 @@
-# day_2
+Daily Tasks
 
 What is Flutter
 Flutter is an open-source UI software development kit created by Google. It is used to build cross-platform (Android & IOS) applications from a single codebase.
