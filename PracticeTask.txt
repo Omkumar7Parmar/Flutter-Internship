@@ -1,0 +1,13 @@
+﻿Day 15
+
+API : API stands for Application Programming Interface, it is used to communicate between Applications and server to exchange info or making changes into the database.
+GET and POST are methods of the HTTP protocol 
+GET is used to retrieve the data from the server. (Read only) (Idempotent)
+POST is used to create new resources. It is not idempotent like GET. Sending multiple requests of POST will result in creating multiple resources.
+JSON (JavaScript Object Notation)
+response :
+{	
+“Name” : “Omkumar”,
+“ID”: 12,
+}
+In JSON format key must be String 

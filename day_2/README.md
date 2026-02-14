@@ -94,3 +94,7 @@ for Email = String must not be empty and must consist "@"
 
 How you handled user feedback
 If input is not valid than form returns "Invalid Input" respectively to the Field type 
+
+Day 15
+What you understood about APIs
+ APIs is used to communicate between application and the server to exchange data and making changes on the server. 
