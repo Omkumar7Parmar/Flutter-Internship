@@ -98,3 +98,8 @@ If input is not valid than form returns "Invalid Input" respectively to the Fiel
 Day 15
 What you understood about APIs
  APIs is used to communicate between application and the server to exchange data and making changes on the server. 
+
+Day 16 API you used - https://my-json-server.typicode.com/typicode/demo/posts 
+How you handled loading and error states 
+if loading state returns StatusCode 200 then hasError = false 
+if not then hasError = true and "Server Error" return in catch block
