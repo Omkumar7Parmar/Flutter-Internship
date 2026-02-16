@@ -13,9 +13,9 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Center(
         child: ElevatedButton(onPressed: (){
-          Navigator.pushNamed(context, 'secondScreen');
+          Navigator.pushNamed(context, 'loadingScreen');
         },
-            child: Text("Second Screen")),
+            child: Text("Fetch Data")),
       ),
     );
   }

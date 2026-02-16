@@ -1,3 +1,4 @@
+import 'package:day_2/screens/loading_screen.dart';
 import 'package:day_2/screens/screen3.dart';
 import 'package:day_2/widgets/custom_list.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,8 @@ class MyApp extends StatelessWidget {
         'homeScreen': (context) => HomeScreen(),
         'secondScreen': (context) => SecondScreen(),
         'thirdScreen': (context) => ThirdScreen(),
+        'loadingScreen': (context) => LoadingScreen(),
+
       },
       home: HomeScreen(),
     );
