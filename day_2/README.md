@@ -104,3 +104,14 @@ API you used - https://my-json-server.typicode.com/typicode/demo/posts
 How you handled loading and error states
 if loading state returns StatusCode 200 then hasError = false
 if not then hasError = true and "Server Error" return in catch block
+
+Day 17
+
+Which API you used https://jsonplaceholder.typicode.com/
+/posts for Success
+/error-test for error 
+
+How you handled API response
+setState() => for status code 201 hasError = false
+else hasError = true
+Screenshots are attached for both scenarios 
