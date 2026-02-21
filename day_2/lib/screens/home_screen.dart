@@ -60,6 +60,10 @@ class HomeScreen extends StatelessWidget {
                 }
               },
                   child: Text("Post Data")),
+
+              ElevatedButton(onPressed: (){
+                Navigator.pushNamed(context, 'getApiScreen');
+              }, child: Text("GET API Screen"))
             ],
           ),
         ),

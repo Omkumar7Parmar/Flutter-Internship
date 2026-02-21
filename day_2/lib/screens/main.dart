@@ -1,12 +1,10 @@
 import 'package:day_2/screens/loading_screen.dart';
 import 'package:day_2/screens/screen3.dart';
-import 'package:day_2/widgets/custom_list.dart';
 import 'package:flutter/material.dart';
 import 'package:day_2/screens/screen2.dart';
-import '/data/product_list.dart';
-import 'package:day_2/widgets/custom_card.dart';
-import 'package:day_2/screens/local_storage.dart';
 import 'package:day_2/screens/home_screen.dart';
+import 'package:day_2/screens/get_api_screen.dart';
+import 'package:day_2/screens/data_screen.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -24,6 +22,8 @@ class MyApp extends StatelessWidget {
         'secondScreen': (context) => SecondScreen(),
         'thirdScreen': (context) => ThirdScreen(),
         'loadingScreen': (context) => LoadingScreen(),
+        'getApiScreen': (context) => GetApiScreen(),
+        'dataScreen': (context) => DataScreen(),
 
       },
       home: HomeScreen(),

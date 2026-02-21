@@ -18,7 +18,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void postData() async {
     try{
       // Use respective url for successful and unsuccessful post request
-      Response response = await post(Uri.parse("https://jsonplaceholder.typicode.com/error-test"), body: {
+      Response response = await post(Uri.parse("https://jsonplaceholder.typicode.com/posts"), body: {
         "firstName": args1.first,
         "lastName": args1.last
       });
