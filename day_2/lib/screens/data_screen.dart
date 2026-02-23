@@ -11,17 +11,22 @@ class DataScreen extends StatefulWidget {
 }
 
 class _DataScreenState extends State<DataScreen> {
+  bool isLoading = true;
   bool hasError = false;
   String errorMessage = "";
   List<Data> dataList = [];
   List dataList1 = [];
 
   void getData() async {
+    setState(() {
+      isLoading = true;
+      hasError = false;
+    });
     try {
       // for success "https://flutter.free.beeceptor.com/posts"
       // for empty state "https://flutter.free.beeceptor.com/empty"
       // for error "https://flutter.free.beeceptor.com/failure"
-      Response response = await get(Uri.parse("https://flutter.free.beeceptor.com/empty"),);
+      Response response = await get(Uri.parse("https://flutter.free.beeceptor.com/posts"),);
       if (response.statusCode == 200) {
         String jsonString = response.body;
         List<dynamic> jsonList = jsonDecode(jsonString);
@@ -43,6 +48,7 @@ class _DataScreenState extends State<DataScreen> {
                 body: p.body,
               );
             }).toList();
+            isLoading = false;
             hasError = false;
           });
         }
