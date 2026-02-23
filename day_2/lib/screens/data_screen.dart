@@ -18,28 +18,34 @@ class _DataScreenState extends State<DataScreen> {
 
   void getData() async {
     try {
-      final Map<String, String> requestHeaders = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
-        'Accept': 'application/json',
-      };
-
-      Response response = await get(Uri.parse("https://jsonplaceholder.typicode.com/posts"),headers: requestHeaders);
+      // for success "https://flutter.free.beeceptor.com/posts"
+      // for empty state "https://flutter.free.beeceptor.com/empty"
+      // for error "https://flutter.free.beeceptor.com/failure"
+      Response response = await get(Uri.parse("https://flutter.free.beeceptor.com/empty"),);
       if (response.statusCode == 200) {
         String jsonString = response.body;
         List<dynamic> jsonList = jsonDecode(jsonString);
-
-        setState(() {
-          dataList = jsonList.map((json) {
-            final p = PostModel.fromJson(json);
-            return Data(
-              userId: p.userId.toString(),
-              id: p.id.toString(),
-              title: p.title,
-              body: p.body,
-            );
-          }).toList();
-          hasError = false;
-        });
+        if(jsonList.isEmpty ){
+          setState(() {
+            hasError = true;
+            errorMessage = "No Data Found";
+          });
+          return;
+        }
+        else{
+          setState(() {
+            dataList = jsonList.map((json) {
+              final p = PostModel.fromJson(json);
+              return Data(
+                userId: p.userId.toString(),
+                id: p.id.toString(),
+                title: p.title,
+                body: p.body,
+              );
+            }).toList();
+            hasError = false;
+          });
+        }
       } else {
         setState(() {
           hasError = true;

@@ -126,3 +126,12 @@ final String body;
 
 How using models improved your code
 Data we get from API is not always in a format we want so by using models allows me to clean it before it goes into the UI 
+
+Day 19
+How you handled different UI states
+A loader is displayed while the data is being fetched from the API
+if it returns null it displays NO Data Found
+What error cases you considered
+Server Error - 404 Status Code
+Connection Error - No Internet Connection
+No Data Found - Empty Data Fetched from API
