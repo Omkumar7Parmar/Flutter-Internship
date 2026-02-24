@@ -7,8 +7,6 @@ class HomeScreen extends StatelessWidget {
   final _form = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
-
-
    HomeScreen({super.key});
 
 
@@ -63,7 +61,10 @@ class HomeScreen extends StatelessWidget {
 
               ElevatedButton(onPressed: (){
                 Navigator.pushNamed(context, 'getApiScreen');
-              }, child: Text("GET API Screen"))
+              }, child: Text("GET API Screen")),
+              ElevatedButton(onPressed: (){
+                Navigator.pushNamed(context, 'stateManagement');
+              }, child: Text("State Management")),
             ],
           ),
         ),

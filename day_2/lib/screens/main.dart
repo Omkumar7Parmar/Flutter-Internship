@@ -5,6 +5,7 @@ import 'package:day_2/screens/screen2.dart';
 import 'package:day_2/screens/home_screen.dart';
 import 'package:day_2/screens/get_api_screen.dart';
 import 'package:day_2/screens/data_screen.dart';
+import 'package:day_2/screens/state_management.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         'loadingScreen': (context) => LoadingScreen(),
         'getApiScreen': (context) => GetApiScreen(),
         'dataScreen': (context) => DataScreen(),
-
+        'stateManagement': (context) => StateManagement(),
       },
       home: HomeScreen(),
     );

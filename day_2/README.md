@@ -135,3 +135,13 @@ What error cases you considered
 Server Error - 404 Status Code
 Connection Error - No Internet Connection
 No Data Found - Empty Data Fetched from API
+
+
+Day 20
+What state you managed
+counter, switch(on/off toggle), isLoading (loader) 
+
+When and why you used setState
+counter state whenever user presses on + or - button for keep updating the counter
+switch state whenever user presses on switch/toggle for keep updating the value of switch whether it is on or off
+isLoading when user presses on Simple API call button for api call and changing after the API response either 200 or something else.
