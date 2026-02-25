@@ -1,73 +1,28 @@
 import 'package:flutter/material.dart';
-
-import 'loading_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:day_2/provider/posts_provider.dart';
 
 class HomeScreen extends StatelessWidget {
-
-  final _form = GlobalKey<FormState>();
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
-   HomeScreen({super.key});
-
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Home Screen"),
-        backgroundColor: Colors.orange,
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Form(
-          key: _form,
-          child: Column(
-            children: [
-              SizedBox(height: 20,),
-              TextFormField(
-                controller: _firstNameController,
-                decoration: InputDecoration(labelText: "Enter First Name", border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                ),
-                validator: (value){
-                  if(value == null || value.isEmpty){
-                    return "Please Enter Name";
-                  }
-                  else{
-                    return null;
-                  }
-                }
-              ),
-              SizedBox(height: 20,),
-              TextFormField(
-                controller: _lastNameController,
-                decoration: InputDecoration(labelText: "Enter Last Name", border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                ),
-                validator: (value){
-                  if(value == null || value.isEmpty){
-                    return "Please Enter Name";
-                  }
-                  else {
-                    return null;
-                  }
-                }
-              ),
-              SizedBox(height: 20,),
-              ElevatedButton(onPressed: (){
-                if(_form.currentState!.validate()){
-                  Navigator.pushNamed(context, 'loadingScreen', arguments: FormArguments1(first: _firstNameController.text, last: _lastNameController.text));
-                }
-              },
-                  child: Text("Post Data")),
 
-              ElevatedButton(onPressed: (){
-                Navigator.pushNamed(context, 'getApiScreen');
-              }, child: Text("GET API Screen")),
-              ElevatedButton(onPressed: (){
-                Navigator.pushNamed(context, 'stateManagement');
-              }, child: Text("State Management")),
-            ],
-          ),
-        ),
+    final provider = context.watch<PostsProvider>();
+    return Scaffold(
+      body: Center(
+        child: provider.isLoading
+            ? const CircularProgressIndicator():
+            provider.posts.isEmpty
+            ? const Text("No Data Found")
+            : ListView.builder(itemCount: provider.posts.length ,itemBuilder: (context, index) {
+
+          final post = context.watch<PostsProvider>().posts[index];
+          return ListTile(
+            leading: CircleAvatar(child: Text(post.id.toString())),
+            subtitle: Text(post.title),
+          );
+        }),
       ),
     );
   }

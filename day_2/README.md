@@ -145,3 +145,16 @@ When and why you used setState
 counter state whenever user presses on + or - button for keep updating the counter
 switch state whenever user presses on switch/toggle for keep updating the value of switch whether it is on or off
 isLoading when user presses on Simple API call button for api call and changing after the API response either 200 or something else.
+
+Day 21
+Your folder structure
+lib - 
+    models/post_model.dart
+    provider/post_provider.dart
+    screens/
+        - main.dart
+        - home_screen.dart
+    services/posts_service.dart
+
+How Provider improved API handling
+it separates the UI and API (business logic) which makes it clean and scalable. 
