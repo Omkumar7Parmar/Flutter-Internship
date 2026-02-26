@@ -157,4 +157,10 @@ lib -
     services/posts_service.dart
 
 How Provider improved API handling
-it separates the UI and API (business logic) which makes it clean and scalable. 
+it separates the UI and API (business logic) which makes it clean and scalable.
+
+Day 21
+What changes you made
+Added 2 reusable widgets, improved the folder structure to keep UI and API logic
+How refactoring improved your project
+Refactoring the folder structure made it easy to add new UI component, new features or even new API logic with providers without rewriting already written code 

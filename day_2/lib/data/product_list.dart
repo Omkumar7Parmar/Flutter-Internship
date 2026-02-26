@@ -1,6 +1,3 @@
-
-import 'package:flutter/cupertino.dart';
-
 final List<Map<String, dynamic>> productList = [
   {
     "name":"Dog",

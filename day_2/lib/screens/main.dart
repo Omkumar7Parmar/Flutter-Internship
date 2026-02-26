@@ -8,7 +8,7 @@ import 'package:day_2/screens/data_screen.dart';
 import 'package:day_2/screens/state_management.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/posts_provider.dart';
+import '../providers/posts_provider.dart';
 void main() {
   runApp(
     MultiProvider(
