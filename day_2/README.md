@@ -159,13 +159,13 @@ lib -
 How Provider improved API handling
 it separates the UI and API (business logic) which makes it clean and scalable.
 
-Day 21
+Day 22
 What changes you made
 Added 2 reusable widgets, improved the folder structure to keep UI and API logic
 How refactoring improved your project
 Refactoring the folder structure made it easy to add new UI component, new features or even new API logic with providers without rewriting already written code
 
-Day 22
+Day 23
 Firebase features you implemented - email password signIn 
 How authentication flow works in your app
 User enters email password and creates account then goes to login screen to re-enter email and password and login. 
