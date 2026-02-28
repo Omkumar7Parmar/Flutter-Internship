@@ -3,17 +3,31 @@ import 'package:provider/provider.dart';
 import 'package:day_2/providers/posts_provider.dart';
 import 'package:day_2/widgets/content_display_handler.dart';
 import 'package:day_2/widgets/post_list_item.dart';
-
+import 'package:day_2/screens/auth/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+// Auto-login check on app start
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
     final postsProvider = context.watch<PostsProvider>();
 
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Posts'),
+        title: Row(
+          children: [
+            Center(child: const Text('Posts')),
+            Spacer(),
+            ElevatedButton(onPressed: (){
+              FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login()));
+            }, child: Text("Logout")),
+          ],
+        ),
+
       ),
       body: Center(
         child: ContentDisplayHandler(
@@ -27,7 +41,7 @@ class HomeScreen extends StatelessWidget {
             },
           ),
         ),
-      ),
+      )
     );
   }
 }

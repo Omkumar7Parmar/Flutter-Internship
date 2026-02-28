@@ -7,9 +7,15 @@ import 'package:day_2/screens/get_api_screen.dart';
 import 'package:day_2/screens/data_screen.dart';
 import 'package:day_2/screens/state_management.dart';
 import 'package:provider/provider.dart';
-
-import '../providers/posts_provider.dart';
-void main() {
+// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'providers/posts_provider.dart';
+import 'package:day_2/screens/auth/signup.dart';
+import 'package:day_2/screens/auth/login.dart';
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     MultiProvider(
       providers: [
@@ -41,7 +47,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: 'homeScreen',
+      initialRoute: 'signup',
       routes: {
         'homeScreen': (context) => HomeScreen(),
         'secondScreen': (context) => SecondScreen(),
@@ -50,8 +56,10 @@ class _MyAppState extends State<MyApp> {
         'getApiScreen': (context) => GetApiScreen(),
         'dataScreen': (context) => DataScreen(),
         'stateManagement': (context) => StateManagement(),
+        'login': (context) => Login(),
+        'signup': (context) => Signup(),
       },
-      home: HomeScreen(),
+      home: Signup(),
     );
   }
 }
