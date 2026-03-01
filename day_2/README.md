@@ -169,4 +169,11 @@ Day 23
 Firebase features you implemented - email password signIn 
 How authentication flow works in your app
 User enters email password and creates account then goes to login screen to re-enter email and password and login. 
-then navigate to homeScreen 
+then navigate to homeScreen
+
+Day 24
+Firestore structure you used
+collection with 3 fields - title, timestamp, userId
+
+How CRUD operations work in your app
+Create adds the new task, Read fetches and displays the stored tasks, Update modifies the existing tasks, Delete removes the task from existed tasks
