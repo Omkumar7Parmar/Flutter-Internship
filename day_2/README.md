@@ -42,9 +42,9 @@ Screen flow explanation
 
 On HomeScreen there is a Elevated button it uses Navigation.push and adds new screen to the navigation stack which is SecondScreen. 
 after clicking the button second screen appears with back button which uses context and after clicking the back button it navigates to the previous screen which was HomeScreen. 
-back button only appears when there is a screen underneath it in the stack thanks to AppBar, because when it doesn't have anything underneath in the stack back button doesn't appears
+back button only appears when there is a screen underneath it in the stack thanks to AppBar, because when it doesn't have anything underneath in the stack back button does not appears
 
-What navigation method you used
+What navigation method you used                                             
 I used Navigation.push 
 
 Day 6
@@ -177,3 +177,11 @@ collection with 3 fields - title, timestamp, userId
 
 How CRUD operations work in your app
 Create adds the new task, Read fetches and displays the stored tasks, Update modifies the existing tasks, Delete removes the task from existed tasks
+
+Day 25
+How image upload works in your app
+in Add New Task -> Select Image -> Image selection -> Upload Image -> Add
+
+How you connected Storage with Firestore
+Used the image download URL from firestore storage document 
+Screenshot is attached as Day25
