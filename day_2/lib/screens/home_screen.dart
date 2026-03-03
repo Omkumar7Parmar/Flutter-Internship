@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:day_2/screens/auth/login.dart';
 import 'package:file_picker/file_picker.dart';
-
+ import 'package:flutter/foundation.dart' show kIsWeb;
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -19,22 +19,82 @@ class _HomeScreenState extends State<HomeScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  bool _isSigningOut = false;
+  bool _isAddingTask = false;
+  bool _isEditingTask = false;
+
   Future<void> _signOut() async {
-    await _auth.signOut();
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login()));
+    setState(() {
+      _isSigningOut = true;
+    });
+    try {
+      await _auth.signOut();
+      if (mounted) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Login()));
+      }
+    } on FirebaseAuthException catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error signing out: ${e.message}')),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('An unexpected error occurred: $e')),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSigningOut = false;
+        });
+      }
+    }
   }
 
   Future<void> _deleteTask(String docId) async {
-    await _firestore.collection('tasks').doc(docId).delete();
+
+    try {
+      await _firestore.collection('tasks').doc(docId).delete();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Task deleted successfully!')),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to delete task: $e')),
+        );
+      }
+    }
+
   }
 
-  Future selectImage() async {
-    final result = await FilePicker.platform.pickFiles();
-    if (result == null) return;
-    setState((){
-      pickedImage = result.files.first;
-    });
+  Future<void> selectImage() async {
+    try {
+      final result = await FilePicker.platform.pickFiles();
+      if (result == null) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('No image selected.')),
+          );
+        }
+        return;
+      }
+      setState(() {
+        pickedImage = result.files.first;
+      });
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error picking image: $e')),
+        );
+      }
+    }
   }
+
   Future<String?> uploadImage() async {
     if (pickedImage == null) return null;
 
@@ -42,25 +102,52 @@ class _HomeScreenState extends State<HomeScreen> {
     final file = File(pickedImage!.path!);
     final ref = FirebaseStorage.instance.ref().child(path);
 
-    setState(() {
-      uploadImg = ref.putFile(file);
-    });
+    try {
+      setState(() {
+        uploadImg = ref.putFile(file);
+      });
 
-    final snapshot = await uploadImg!.whenComplete(() {});
+      final snapshot = await uploadImg!.whenComplete(() {});
+      final urlDownload = await snapshot.ref.getDownloadURL();
+      print('Download Link: $urlDownload');
 
-    final urlDownload = await snapshot.ref.getDownloadURL();
-    print('Download Link: $urlDownload');
-
-    setState(() {
-      uploadImg = null;
-    });
-
-    return urlDownload;
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Image uploaded successfully!')),
+        );
+      }
+      return urlDownload;
+    } on FirebaseException catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error uploading image: ${e.message}')),
+        );
+      }
+      return null;
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('An unexpected error occurred during image upload: $e')),
+        );
+      }
+      return null;
+    } finally {
+      if (mounted) {
+        setState(() {
+          uploadImg = null;
+        });
+      }
+    }
   }
-
 
   Future<void> _addTaskDialog() async {
     TextEditingController taskController = TextEditingController();
+
+    if (pickedImage != null) {
+      setState(() {
+        pickedImage = null;
+      });
+    }
 
     return showDialog(
       context: context,
@@ -70,85 +157,145 @@ class _HomeScreenState extends State<HomeScreen> {
             return AlertDialog(
               title: const Text("Add New Task"),
               content: SingleChildScrollView(
-                child: SizedBox(
-                  height: 600,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextField(
-                        controller: taskController,
-                        decoration: const InputDecoration(hintText: "Enter task here"),
-                      ),
-                      const SizedBox(height: 20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextField(
+                      controller: taskController,
+                      decoration: const InputDecoration(hintText: "Enter task here"),
+                    ),
+                    const SizedBox(height: 20),
 
-                      if (pickedImage != null)
-                        Container(
-                          height: Image.file(File(pickedImage!.path!)).height,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.blue[50],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.file(
-                              File(pickedImage!.path!),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                    if (pickedImage != null)
+                      Container(
+                        constraints: const BoxConstraints(maxHeight: 200),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.blue[50],
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                      const SizedBox(height: 5),
-
-                      Row(
-                        children: [
-                          ElevatedButton(
-                              onPressed: () async {
-                                await selectImage();
-                                setDialogState(() {});
-                              },
-                              child: const Text("Select Image")
-                          ),
-                          const SizedBox(width: 10),
-                          if (pickedImage != null)
-                            ElevatedButton(
-                                onPressed: () async {
-                                  setDialogState(() {
-                                    uploadImage();
-                                  });
-                                },
-                                child: const Text("Upload")
-                            ),
-                          const SizedBox(width: 10),
-                        ],
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: kIsWeb // Check if running on web
+                              ? Image.network(pickedImage!.path!, fit: BoxFit.cover)
+                              : Image.file(
+                                  File(pickedImage!.path!),
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
                       ),
-                      buildProgress(),
-                    ],
-                  ),
+                    if (pickedImage != null) const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: _isAddingTask
+                              ? null
+                              : () async {
+                                  await selectImage();
+                                  setDialogState(() {});
+                                },
+                          icon: const Icon(Icons.image),
+                          label: const Text("Select Image"),
+                        ),
+                        const SizedBox(width: 10),
+                        if (pickedImage != null)
+                          ElevatedButton.icon(
+                            onPressed: uploadImg != null || _isAddingTask
+                                ? null
+                                : () async {
+                                    setDialogState(() {
+                                      uploadImage();
+                                    });
+                                  },
+                            icon: const Icon(Icons.cloud_upload),
+                            label: const Text("Upload"),
+                          ),
+                      ],
+                    ),
+                    buildProgress(),
+                  ],
                 ),
               ),
               actions: [
-                TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
+                TextButton(
+                  onPressed: _isAddingTask
+                      ? null
+                      : () {
+                          Navigator.pop(context);
+                          setDialogState(() {
+                            pickedImage = null;
+                            uploadImg = null;
+                          });
+                        },
+                  child: const Text("Cancel"),
+                ),
                 ElevatedButton(
-                  onPressed: () async {
-                    if (taskController.text.isNotEmpty) {
-                      String? imageUrl;
+                  onPressed: _isAddingTask || taskController.text.isEmpty
+                      ? null
+                      : () async {
+                          setDialogState(() {
+                            _isAddingTask = true;
+                          });
+                          try {
+                            String? imageUrl;
+                            if (pickedImage != null) {
+                              imageUrl = await uploadImage();
+                              if (imageUrl == null) {
+                                if (mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Image upload failed, task not added.')),
+                                  );
+                                }
+                                return;
+                              }
+                            }
 
-                      if (pickedImage != null) {
-                        imageUrl = await uploadImage();
-                      }
+                            await _firestore.collection('tasks').add({
+                              'title': taskController.text,
+                              'imageUrl': imageUrl,
+                              'timestamp': FieldValue.serverTimestamp(),
+                              'userId': _auth.currentUser?.uid,
+                            });
 
-                      await _firestore.collection('tasks').add({
-                        'title': taskController.text,
-                        'imageUrl': imageUrl, // Store the URL here!
-                        'timestamp': FieldValue.serverTimestamp(),
-                        'userId': _auth.currentUser?.uid,
-                      });
-
-                      setState(() { pickedImage = null; });
-                      Navigator.of(context).pop();
-                    }
-                  },
-                  child: const Text("Add"),
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Task added successfully!')),
+                              );
+                              Navigator.of(context).pop();
+                            }
+                          } on FirebaseException catch (e) {
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Error adding task: ${e.message}')),
+                              );
+                            }
+                          } catch (e) {
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('An unexpected error occurred: $e')),
+                              );
+                            }
+                          } finally {
+                            if (mounted) {
+                              setDialogState(() {
+                                _isAddingTask = false;
+                                pickedImage = null;
+                                uploadImg = null;
+                              });
+                            }
+                          }
+                        },
+                  child: _isAddingTask
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : const Text("Add"),
                 ),
               ],
             );
@@ -163,32 +310,75 @@ class _HomeScreenState extends State<HomeScreen> {
     return showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: const Text("Edit Task"),
-          content: TextField(
-            controller: taskController,
-            decoration: const InputDecoration(hintText: "Edit task here"),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("Cancel"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                if (taskController.text.isNotEmpty) {
-                  await _firestore.collection('tasks').doc(docId).update({
-                    'title': taskController.text,
-                    'timestamp': FieldValue.serverTimestamp(), // Update timestamp on edit
-                  });
-                  Navigator.of(context).pop();
-                }
-              },
-              child: const Text("Save"),
-            ),
-          ],
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              title: const Text("Edit Task"),
+              content: TextField(
+                controller: taskController,
+                decoration: const InputDecoration(hintText: "Edit task here"),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: _isEditingTask
+                      ? null
+                      : () {
+                          Navigator.of(context).pop();
+                        },
+                  child: const Text("Cancel"),
+                ),
+                ElevatedButton(
+                  onPressed: _isEditingTask || taskController.text.isEmpty
+                      ? null
+                      : () async {
+                          setDialogState(() {
+                            _isEditingTask = true;
+                          });
+                          try {
+                            await _firestore.collection('tasks').doc(docId).update({
+                              'title': taskController.text,
+                              'timestamp': FieldValue.serverTimestamp(),
+                            });
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Task updated successfully!')),
+                              );
+                              Navigator.of(context).pop();
+                            }
+                          } on FirebaseException catch (e) {
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Error updating task: ${e.message}')),
+                              );
+                            }
+                          } catch (e) {
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('An unexpected error occurred: $e')),
+                              );
+                            }
+                          } finally {
+                            if (mounted) {
+                              setDialogState(() {
+                                _isEditingTask = false;
+                              });
+                            }
+                          }
+                        },
+                  child: _isEditingTask
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : const Text("Save"),
+                ),
+              ],
+            );
+          },
         );
       },
     );
@@ -196,7 +386,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Get the current user's UID to filter tasks
     final String? currentUserId = _auth.currentUser?.uid;
 
     return Scaffold(
@@ -206,8 +395,17 @@ class _HomeScreenState extends State<HomeScreen> {
             const Text('Tasks'),
             const Spacer(),
             ElevatedButton(
-              onPressed: _signOut,
-              child: const Text("Logout"),
+              onPressed: _isSigningOut ? null : _signOut,
+              child: _isSigningOut
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const Text("Logout"),
             ),
           ],
         ),
@@ -217,7 +415,7 @@ class _HomeScreenState extends State<HomeScreen> {
           : StreamBuilder<QuerySnapshot>(
               stream: _firestore
                   .collection('tasks')
-                  .where('userId', isEqualTo: currentUserId) // Filter tasks by user ID
+                  .where('userId', isEqualTo: currentUserId)
                   .orderBy('timestamp', descending: true)
                   .snapshots(),
               builder: (context, snapshot) {
@@ -303,31 +501,30 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buildProgress() => StreamBuilder<TaskSnapshot>(
-    stream: uploadImg?.snapshotEvents,
-    builder: (context, snapshot) {
-      if (snapshot.hasData) {
-        final snap = snapshot.data!;
-        double progress = snap.bytesTransferred / snap.totalBytes;
-        return Container(
-            height: 35,
-            width: double.infinity,
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                LinearProgressIndicator(value: progress),
-                Center(
-                  child: Text(
-                    '${(100 * progress).roundToDouble()}%',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                )
-              ],
-            )
-        );
-      } else {
-        return Container();
-      }
-    }
-  );
+        stream: uploadImg?.snapshotEvents,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final snap = snapshot.data!;
+            double progress = snap.bytesTransferred / snap.totalBytes;
+            return Container(
+                height: 35,
+                width: double.infinity,
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    LinearProgressIndicator(value: progress),
+                    Center(
+                      child: Text(
+                        '${(100 * progress).roundToDouble()}%',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    )
+                  ],
+                ));
+          } else {
+            return Container();
+          }
+        },
+      );
 }

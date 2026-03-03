@@ -185,3 +185,8 @@ in Add New Task -> Select Image -> Image selection -> Upload Image -> Add
 How you connected Storage with Firestore
 Used the image download URL from firestore storage document 
 Screenshot is attached as Day25
+
+
+Day 26
+What optimizations you made - added const to applicable widgets,
+What issues you fixed -  improved image preview, added better error handling for image upload.
